@@ -1,4 +1,5 @@
-import { IMovie, Movie } from "@/domain/entities/moovie.entity";
+import { IMovieDoc, Movie } from "@/infra/databases/mongodb/models";
+
 import mongoose, { HydratedDocument } from "mongoose";
 
 (async () => {
@@ -7,14 +8,16 @@ import mongoose, { HydratedDocument } from "mongoose";
 
         console.log("Conexão com MongoDB bem-sucedida!");
 
-        var thor: HydratedDocument<IMovie> = new Movie({
+        console.log(new mongoose.Types.ObjectId().toHexString());
+
+        var thor: HydratedDocument<IMovieDoc> = new Movie({
             title: "Thor",
             rating: "PG-13",
             releaseYear: "2011",
             hasCreditCookie: true,
         });
 
-        console.log(thor);
+        console.log("thor ", thor);
     } catch (error) {
         console.error("Erro ao conectar ao MongoDB:", error);
     }

@@ -1,12 +1,10 @@
 import express from "express";
-import "@/infra/databases/mongoose";
-import { IMovie, Movie } from "@/domain/entities/moovie.entity";
-import { HydratedDocument } from "mongoose";
+import "@/infra/databases/mongodb/mongoose";
 
 const app = express();
 const PORT = 3000;
 
-
+app.use(express.json());
 
 app.get("/", (req, res) => {
     res.send("Hello World!");
