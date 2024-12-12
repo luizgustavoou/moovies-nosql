@@ -24,3 +24,4 @@ export const Movie = mongoose.model<IMovieDoc, IMovieModel>(
     "Movie",
     movieSchema
 );
+

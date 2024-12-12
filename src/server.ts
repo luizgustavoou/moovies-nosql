@@ -1,5 +1,6 @@
 import express from "express";
 import "@/infra/databases/mongodb/mongoose";
+import { MongooseConnection } from "@/infra/databases/mongodb/mongoose";
 
 const app = express();
 const PORT = 3000;
