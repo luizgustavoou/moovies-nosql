@@ -8,8 +8,25 @@ const PORT = 3000;
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("Hello World!");
+app.get("/:collection", async (req: express.Request, res: express.Response) => {
+    try {
+        const { collection } = req.params;
+
+        console.log(collection);
+
+        const connection = await MongooseConnection.getInstance();
+
+        const findCursor = await connection.db.collection(collection).find();
+
+        const documents = await findCursor.toArray();
+
+        res.status(200).json({ documents });
+    } catch (error) {
+        res.status(500).json({
+            message: "Erro ao buscar documentos",
+            error: error.message,
+        });
+    }
 });
 
 app.post(
@@ -20,12 +37,12 @@ app.post(
         const connection = await MongooseConnection.getInstance();
 
         try {
-            const result = await connection.db
+            const insertResult = await connection.db
                 .collection(collection)
                 .insertOne(req.body);
 
-            if (result.acknowledged) {
-                res.status(201).json({ result });
+            if (insertResult.acknowledged) {
+                res.status(201).json({ insertResult });
             } else {
                 res.status(500).json({ message: "Erro ao inserir documento" });
             }
